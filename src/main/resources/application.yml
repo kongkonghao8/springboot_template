@@ -1,0 +1,62 @@
+server:
+  port: 8080
+spring:
+  redis:
+    port: 6379
+    host: 192.168.139.133
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 0
+        max-wait: 1ms
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    url: jdbc:mysql://192.168.139.133:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdea: 2
+    maxIdea: 10
+    maxActive: 20
+    maxWait: 5
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+  rabbitmq:
+    host: 192.168.139.133
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    virtual-host: /
+
+
+
+mybatis:
+  type-aliases-package: com.example.springbootshiro.entity
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    com.geeking.coding.springboot.dao : debug
+
+
+rabbit:
+  config:
+    queue-name: demo-queue
+    exchange-name: demo-exchange
+    routingkey-name: demo-routingkey
